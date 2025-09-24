@@ -18,6 +18,10 @@ Suggested data preprocessings
 | file extension | map .pdf .txt to `<FILE>` | some spam email may have download links disguised as file downloads |mapped once in HTML parsing and mapped again to handle non-`<a>` cases in HTML parser| 
 
 
+ACTUAL workflow from raw input to word embeddding 
 
-proposed preprocessing workflow from raw to input for word2vec model
-raw email input -> masking of special tokens -> whitelist filtering at character level -> handling of special case ( de-obfuscate , cap character repeat) -> output cleaned SENTENCES -> feed into subword processor -> feed into word2vec
+1) raw file is truncated (not confirmed) , only taking body and label columns, stored as df
+2) df is passed into preprocess_email_text(), the main preprocessing pipeline, the details of the preprocessing pipeline is above , returns a df of same dimensions
+3) df is passed into vocab_builder to generate subword level vocab,generates .model and .vocab files
+4) df is passed into vocab_to_id_mapper(), adds 2 new columns : sp_id and padded_sp_id (for downstream BiLSTM) , sentence piece id is used because it is fixed , more consistent 
+5) df is pass into word2vec_embedder() , function trains, and generates embeddings, as well as a sp_id -> wv vector mapping 
