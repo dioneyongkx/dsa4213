@@ -20,4 +20,4 @@ Suggested data preprocessings
 
 
 proposed preprocessing workflow from raw to input for word2vec model
-raw email input -> masking of special tokens -> whitelist filtering at character level -> handling of special case ( de-obfuscate , cap character repeat, min word count etc ) -> output cleaned SENTENCES -> feed into word2vec model e
+raw email input -> masking of special tokens -> whitelist filtering at character level -> handling of special case ( de-obfuscate , cap character repeat) -> output cleaned SENTENCES -> feed into subword processor -> feed into word2vec
