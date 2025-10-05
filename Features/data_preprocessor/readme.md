@@ -25,3 +25,14 @@ ACTUAL workflow from raw input to word embeddding
 3) df is passed into vocab_builder to generate subword level vocab,generates .model and .vocab files
 4) df is passed into vocab_to_id_mapper(), adds 2 new columns : sp_id and padded_sp_id (for downstream BiLSTM) , sentence piece id is used because it is fixed , more consistent 
 5) df is pass into word2vec_embedder() , function trains, and generates embeddings, as well as a sp_id -> wv vector mapping 
+
+
+ACTUAL workflow dimensions
+
+1) word2vec 
+    * vector_dim = 300 (to match with LSTM input_dim)
+
+2) Sentence piece subword processor 
+    * max_len = 256 ( padded if short, truncated if longer)
+    * vocab_size = 50_000
+    * encoder model = bpe (Byte pair encoding)
