@@ -121,3 +121,40 @@ class BiLSTMEncoder(nn.Module):
     def get_output_dim(self):
         """Returns the output dimension of the encoder."""
         return self.hidden_dim * self.num_directions
+
+
+
+####################
+# Testing BiLSTM Encoder #
+####################
+# Uncomment below to test the BiLSTMEncoder independently
+
+if __name__ == "__main__":
+    """Example of using BiLSTM encoder."""
+    print("=== BiLSTM Encoder Example ===")
+    
+    # Parameters
+    batch_size = 16
+    seq_len = 50
+    embedding_dim = 100  # Word2Vec dimension
+    hidden_dim = 128
+    
+    # Create encoder
+    encoder = BiLSTMEncoder(
+        embedding_dim=embedding_dim,
+        hidden_dim=hidden_dim,
+        num_layers=2,
+        dropout=0.3
+    )
+    
+    # Dummy input (word embeddings from Word2Vec)
+    embedded_sequences = torch.randn(batch_size, seq_len, embedding_dim)
+    lengths = torch.randint(20, seq_len, (batch_size,))
+    
+    # Forward pass
+    output = encoder(embedded_sequences, lengths)
+    print(f"Input shape: {embedded_sequences.shape}")
+    print(f"Output shape: {output.shape}")
+    print(f"Output dimension: {encoder.get_output_dim()}")
+
+###################
