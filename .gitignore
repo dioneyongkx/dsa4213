@@ -1,4 +1,5 @@
 # ignore outputs from colab model runs
 Features/data_preprocessor/colab_processed_models/
-Features/encoding/full_447_batch_A
+Features/encoding/bilstm_pipeline/full_447_batch_A
 Features/encoding/raw_encoder_data_sets
+Features/encoding/bilstm_pipeline/clean_data_bilstm
