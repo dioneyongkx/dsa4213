@@ -16,13 +16,15 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 class BiLSTMEncoder(nn.Module):
-    
     def __init__(self, 
+                embedding_matrix,          
+                pad_id: int,
                 embedding_dim: int,
                 hidden_dim: int,
                 num_layers: int = 2,
                 dropout: float = 0.3,
-                bidirectional: bool = True):
+                bidirectional: bool = True,
+                freeze_embeddings: bool = True):
         """
         Initialize BiLSTM encoder.
         
@@ -34,6 +36,13 @@ class BiLSTMEncoder(nn.Module):
             bidirectional: Whether to use bidirectional LSTM
         """
         super(BiLSTMEncoder, self).__init__()
+        num_embeddings, embed_dim = embedding_matrix.shape
+
+        
+        self.emb = nn.Embedding(num_embeddings, embed_dim, padding_idx=pad_id)
+        with torch.no_grad():
+            self.emb.weight.copy_(torch.from_numpy(embedding_matrix))
+        self.emb.weight.requires_grad = not freeze_embeddings
         
         self.embedding_dim = embedding_dim
         self.hidden_dim = hidden_dim
@@ -129,32 +138,32 @@ class BiLSTMEncoder(nn.Module):
 ####################
 # Uncomment below to test the BiLSTMEncoder independently
 
-if __name__ == "__main__":
-    """Example of using BiLSTM encoder."""
-    print("=== BiLSTM Encoder Example ===")
+# if __name__ == "__main__":
+#     """Example of using BiLSTM encoder."""
+#     print("=== BiLSTM Encoder Example ===")
     
-    # Parameters
-    batch_size = 16
-    seq_len = 50
-    embedding_dim = 100  # Word2Vec dimension
-    hidden_dim = 128
+#     # Parameters
+#     batch_size = 16
+#     seq_len = 50
+#     embedding_dim = 100  # Word2Vec dimension
+#     hidden_dim = 128
     
-    # Create encoder
-    encoder = BiLSTMEncoder(
-        embedding_dim=embedding_dim,
-        hidden_dim=hidden_dim,
-        num_layers=2,
-        dropout=0.3
-    )
+#     # Create encoder
+#     encoder = BiLSTMEncoder(
+#         embedding_dim=embedding_dim,
+#         hidden_dim=hidden_dim,
+#         num_layers=2,
+#         dropout=0.3
+#     )
     
-    # Dummy input (word embeddings from Word2Vec)
-    embedded_sequences = torch.randn(batch_size, seq_len, embedding_dim)
-    lengths = torch.randint(20, seq_len, (batch_size,))
+#     # Dummy input (word embeddings from Word2Vec)
+#     embedded_sequences = torch.randn(batch_size, seq_len, embedding_dim)
+#     lengths = torch.randint(20, seq_len, (batch_size,))
     
-    # Forward pass
-    output = encoder(embedded_sequences, lengths)
-    print(f"Input shape: {embedded_sequences.shape}")
-    print(f"Output shape: {output.shape}")
-    print(f"Output dimension: {encoder.get_output_dim()}")
+#     # Forward pass
+#     output = encoder(embedded_sequences, lengths)
+#     print(f"Input shape: {embedded_sequences.shape}")
+#     print(f"Output shape: {output.shape}")
+#     print(f"Output dimension: {encoder.get_output_dim()}")
 
 ###################
