@@ -127,3 +127,35 @@ class DistilBERTEncoder(nn.Module):
     def get_output_dim(self):
         """Returns the output dimension of the encoder."""
         return 768  # DistilBERT hidden size
+
+
+####################
+# Testing DistilBERT Encoder #
+####################
+# Uncomment below to test the DistilBERTEncoder independently
+
+def example_distilbert_usage():
+    """Example of using DistilBERT encoder."""
+    print("\n=== DistilBERT Encoder Example ===")
+    
+    batch_size = 16
+    seq_len = 128
+    
+    # Create encoder
+    encoder = DistilBERTEncoder(
+        model_name='distilbert-base-uncased',
+        freeze_bert=False,
+        pooling_strategy='cls'
+    )
+    
+    # Dummy input (from tokenizer)
+    input_ids = torch.randint(0, 30522, (batch_size, seq_len))  # DistilBERT vocab size
+    attention_mask = torch.ones(batch_size, seq_len)
+    
+    # Forward pass
+    output = encoder(input_ids, attention_mask)
+    print(f"Input shape: {input_ids.shape}")
+    print(f"Output shape: {output.shape}")
+    print(f"Output dimension: {encoder.get_output_dim()}")
+    
+####################
