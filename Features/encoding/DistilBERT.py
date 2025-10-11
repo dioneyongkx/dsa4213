@@ -158,4 +158,7 @@ def example_distilbert_usage():
     print(f"Output shape: {output.shape}")
     print(f"Output dimension: {encoder.get_output_dim()}")
     
+if __name__ == "__main__":
+    example_distilbert_usage()
+    
 ####################
