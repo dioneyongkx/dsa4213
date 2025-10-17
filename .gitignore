@@ -4,3 +4,4 @@ Features/encoding/raw_encoder_data_sets
 Features/encoding/bilstm_pipeline/clean_data_bilstm
 Features/encoding/bilstm_pipeline/full_220
 Features/encoding/bilstm_pipeline/checkpoints
+Features/encoding/bilstm_pipeline/best_ckpts
