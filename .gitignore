@@ -4,7 +4,7 @@ Features/encoding/bilstm_pipeline/clean_data_bilstm
 Features/encoding/bilstm_pipeline/full_220
 Features/encoding/bilstm_pipeline/checkpoints
 # Features/encoding/bilstm_pipeline/best_ckpts
-Features/encoding/bilstm_pipeline/archive
+Features/encoding/bilstm_pipeline/archive/
 Features/raw_data_handler/colab_processed_models
 
 # Ignore all data files in any subfolder
