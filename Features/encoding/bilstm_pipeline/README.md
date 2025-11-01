@@ -1,33 +1,51 @@
-This subfolder contains the training pipelines for our BiLSTM model. It mainly consists of notebooks and a main predefined BiLSTM module for easy reference. Due to github restrictions, our saved models and clean data cannot be put onto github. In each pipeline, the references to our saved models will be denoted as `best_ckpts` which contains the trained BiLSTM model and `full_220` which contains our trained Word2Vec embeddings and Sentencepiece Processor
+# 🧠 BiLSTM Model Pipeline
 
-1) `biLSTM_prepro.ipynb` : This notebook serves to clean and prepare all the dataset involved in the BiLSTM pipeline, details of the preprocessing are included in full below
-1) `biLSTM_pipeline.ipynb` : The main training pipeline for our base BiLSTM model, the final model is saved as a checkpoint 
-2) `biLSTM_ablation.ipynb` : The ablation training pipeline for our BiLSTM encoder + HistGradientBoosy classifier head 
-3) `biLSTM_reloader.ipynb` : This notebook was designed to reload both models for downstream evaluation testing
-4) `biLSTM_training_eda.ipynb` : This notebook was used to analyse the training data and relevant plots included in our report 
-5) `biLSTM.py` : This module serves as the central source of our BiLSTM module, the decision to modularise our model definition was intentional so as to support our 1 notebook per pipeline project design
+This subfolder contains the complete training and evaluation pipelines for the **BiLSTM-based spam classification model**.  
+It includes modularized code, preprocessing steps, training notebooks, and documentation to ensure reproducibility and clarity.
 
+Due to GitHub storage restrictions, **saved model checkpoints** and **processed datasets** are not included in this repository.  
+Throughout the notebooks, these external references are denoted as:
+- `best_ckpts/` → directory containing trained BiLSTM model checkpoints  
+- `embedder_files/` → directory containing trained **Word2Vec embeddings** and **SentencePiece processor** files  
 
+---
 
+## 📘 Notebook Overview
 
+| File | Description |
+|------|--------------|
+| **`biLSTM_prepro.ipynb`** | Includes text preprocessing, `Word2Vec` embedding training, and `SentencePiece` subword processing. These are separated from the main pipeline so that `biLSTM_pipeline.ipynb`, `biLSTM_ablation.ipynb`, and `biLSTM_reloader.ipynb` can directly reuse the generated embedding and tokenizer models. Full preprocessing details are documented below. |
+| **`biLSTM_pipeline.ipynb`** | Contains the end-to-end training workflow for the BiLSTM base model, focusing solely on supervised training of the encoder and classifier head using precomputed embeddings. Produces and saves the final checkpoint to `best_ckpts/`. |
+| **`biLSTM_ablation.ipynb`** | Ablation study training pipeline combining the BiLSTM encoder with a `HistGradientBoosting` classifier head. |
+| **`biLSTM_reloader.ipynb`** | Reloads both trained models for downstream evaluation and cross-domain testing. |
+| **`biLSTM_training_eda.ipynb`** | Used to analyse training results and generate key visualizations referenced in the report. |
+| **`biLSTM.py`** | Central BiLSTM module definition. Modularization was intentional to support the “1-notebook-per-pipeline” project design. |
 
-## Data preprocessing unit 
+---
 
-This file will store all the preprocessing details for our corpus. 
+## ⚙️ Preprocessing Unit — `biLSTM_prepro.ipynb`
 
-Suggested data preprocessings 
-| Step | Description | Rationale for preprocessing | Notes |
-|------|-------------|--------------|-------|
-| Remove HTML tags | Strip `<html>`, `<a>`, etc. | Emails often contain HTML; noise for model | BeautifulSoup from bs4 was used to parse html,`<a>` tags were handled with a masking function to preserve information for various attributes |
-| Remove URLs | Replace with `<URL>` | Links are frequent in spam | mapped once in HTML parsing and mapped again to handle non-`<a>` cases in HTML parser|
-| Remove numbers | Replace with `<NUMBER>` | prevent mapping one embedding to every number| consider to drop completely as it does not bring any value |
-| Remove money | Replace with `<MONEY>` | special token to preserve scam signal| mapped at higher levels to deconflict with deobufuscate |
-| Remove email addresses | Replace with `<EMAIL>` | Stops user-specific leakage , somewhat is noisy data | mapped once in HTML parsing and mapped again to handle non-`<a>` cases in HTML parser , currently can handle different end domains and username configuration|
-| Tokenization | subwords | to match DistilBERTs subword level embedding | feed into wordpiece  |
-| Lemmatization/Stemming | Reduce words to base form (`running` → `run`) | Normalizes vocabulary | Lemmatization > stemming for readability |
-| Whitelisting | Keep only tokens in an **approved vocabulary list**:<br>• currency<br>• file extensions<br>• spammy tokens<br>• email/URL markers<br>• dates<br>• numbers<br>• emoji<br><br>**Base set**: `a–z, A–Z, 0–9, whitespace, . , ! ? ' " : ; - _ ( ) @ # $ % ^ &` | serve as a base filtering at character level,easier to keep what is wanted rather than exclude a specific list | to add more stuff to whitelist,may drop important rare tokens |
-| Handle repeated characters | Normalize (`loooove` → `love`) | Prevents vocab explosion | |
-| pruning words below a minimum frequency| pruning < 10   | removes rare words to reduce noise | to adjust prune level based on embedding performance
-| file extension | map .pdf .txt to `<FILE>` | some spam email may have download links disguised as file downloads |mapped once in HTML parsing and mapped again to handle non-`<a>` cases in HTML parser| 
+This notebook contains the preprocessing workflow applied to all corpora used in the BiLSTM pipeline.  
+The goal was to produce a **clean, standardized text corpus** compatible with both Word2Vec embedding training and sequence modeling.
 
+### Data Preprocessing Details
 
+| Step | Description | Rationale | Notes |
+|------|-------------|------------|-------|
+| **Remove HTML tags** | Strips tags like `<html>` and `<a>` while preserving semantic info. | Emails often contain HTML noise. | Used BeautifulSoup (`bs4`); `<a>` tags masked via custom function to retain attributes. |
+| **Mask URLs** | Replaces all links with `<URL>`. | Links are frequent spam indicators. | Applied both during HTML parsing and separately for non-HTML links. |
+| **Mask numbers** | Replaces digits with `<NUMBER>`. | Prevents unnecessary embeddings for unique numeric tokens. | Could alternatively be dropped if deemed uninformative. |
+| **Mask money values** | Replaces amounts with `<MONEY>`. | Preserves potential scam cues. | Mapped early to avoid conflicts with other masking steps. |
+| **Mask email addresses** | Replaces addresses with `<EMAIL>`. | Prevents user-specific leakage and reduces noise. | Handles multiple domain/user formats; applied during and after HTML parsing. |
+| **Lemmatization** | Converts inflected words to their base form. | Normalizes vocabulary, improving generalization. | Preferred over stemming for readability. |
+| **Subword tokenization** | Splits text into subword units via SentencePiece. | Ensures alignment with DistilBERT’s subword representation. | Uses trained SentencePiece model (`email_sp.model`). |
+| **Character-level whitelisting** | Retains only characters from an approved set (letters, digits, punctuation, emoji). | Provides consistent input space and avoids noisy tokens. | Easier to maintain than blacklisting rare symbols. |
+| **Normalize repeated characters** | Reduces excessive character repetition (e.g., `loooove` → `love`). | Prevents vocabulary explosion. | Helps reduce out-of-vocabulary noise. |
+| **Prune rare words** | Removes tokens below minimum frequency (e.g., `< 10`). | Eliminates noisy, low-value words from the corpus. | Threshold tunable based on embedding performance. |
+| **File extension masking** | Maps `.pdf`, `.txt`, etc., to `<FILE>`. | Captures common phishing/scam download cues. | Handled both during HTML parsing and in later regex mapping. |
+
+---
+
+✅ **Summary:**  
+The preprocessing pipeline standardizes multiple text corpora into a consistent, noise-reduced, and semantically meaningful form suitable for **embedding training** and **sequence modeling**.  
+This ensures the BiLSTM encoder learns from clean, representative linguistic patterns while preserving key scam signals (URLs, money, files, etc.).
