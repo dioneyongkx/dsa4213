@@ -14,7 +14,7 @@ Throughout the notebooks, these external references are denoted as:
 
 | File | Description |
 |------|--------------|
-| **`biLSTM_prepro.ipynb`** | Includes text preprocessing, `Word2Vec` embedding training, and `SentencePiece` subword processing. These are separated from the main pipeline so that `biLSTM_pipeline.ipynb`, `biLSTM_ablation.ipynb`, and `biLSTM_reloader.ipynb` can directly reuse the generated embedding and tokenizer models. Full preprocessing details are documented below. |
+| **`biLSTM_prepro.ipynb`** | Includes text preprocessing, `Word2Vec` embedding training, and `SentencePiece` subword processing. These are separated from the main pipeline so that `biLSTM_pipeline.ipynb`, `biLSTM_ablation.ipynb`, and `biLSTM_reloader.ipynb` can directly reuse the generated embedding and tokenizer models. Full preprocessing details are documented below and `Word2Vec` and `SentencePiece` are saved to `embedder_files/` |
 | **`biLSTM_pipeline.ipynb`** | Contains the end-to-end training workflow for the BiLSTM base model, focusing solely on supervised training of the encoder and classifier head using precomputed embeddings. Produces and saves the final checkpoint to `best_ckpts/`. |
 | **`biLSTM_ablation.ipynb`** | Ablation study training pipeline combining the BiLSTM encoder with a `HistGradientBoosting` classifier head. |
 | **`biLSTM_reloader.ipynb`** | Reloads both trained models for downstream evaluation and cross-domain testing. |
