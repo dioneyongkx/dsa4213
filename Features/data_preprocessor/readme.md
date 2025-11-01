@@ -18,21 +18,4 @@ Suggested data preprocessings
 | file extension | map .pdf .txt to `<FILE>` | some spam email may have download links disguised as file downloads |mapped once in HTML parsing and mapped again to handle non-`<a>` cases in HTML parser| 
 
 
-ACTUAL workflow from raw input to word embeddding 
-
-1) raw file is truncated (not confirmed) , only taking body and label columns, stored as df
-2) df is passed into preprocess_email_text(), the main preprocessing pipeline, the details of the preprocessing pipeline is above , returns a df of same dimensions
-3) df is passed into vocab_builder to generate subword level vocab,generates .model and .vocab files
-4) df is passed into vocab_to_id_mapper(), adds 2 new columns : sp_id and padded_sp_id (for downstream BiLSTM) , sentence piece id is used because it is fixed , more consistent 
-5) df is pass into word2vec_embedder() , function trains, and generates embeddings, as well as a sp_id -> wv vector mapping 
-
-
-ACTUAL workflow dimensions
-
-1) word2vec 
-    * vector_dim = 300 (to match with LSTM input_dim)
-
-2) Sentence piece subword processor 
-    * max_len = 256 ( padded if short, truncated if longer)
-    * vocab_size = 50_000
-    * encoder model = bpe (Byte pair encoding)
+Once training is completed, the trained Word2Vec embedding, embedding matrix and relevant Sentencepiece processor files are saved into `full_220` which is not git tracked due to size limit requirements. The decision was made to package the embedding model and tokeniser into a folder such that it can serve as a single entry point to use when encoding our encoder dataset downstream in our biLSTM pipeline

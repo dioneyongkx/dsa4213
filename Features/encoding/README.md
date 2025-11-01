@@ -33,10 +33,10 @@ The BiLSTM Encoder processes sequential word embeddings and captures bidirection
 
 #### Architecture Details
 
-- **Input**: Word embeddings from Word2Vec (dimension: 100)
+- **Input**: Word embeddings from Word2Vec (dimension: 300)
 - **LSTM Layers**: 2 stacked bidirectional LSTM layers
-- **Hidden Dimension**: 128 per direction (256 total)
-- **Dropout**: 0.3 between layers and at output
+- **Hidden Dimension**: 256 per direction (256 total)
+- **Dropout**: 0.5 between layers and at output
 - **Output**: Concatenated final hidden states from both directions
 
 #### Key Features
