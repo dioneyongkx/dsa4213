@@ -90,7 +90,7 @@ class DistilBERTReloadEval:
 
 # Example usage template
 if __name__ == "__main__":
-    # Load raw test data (you plug in your dataset!)
+    # Load raw test data 
     texts = [...]   # <- list of test sentences
     labels = [...]  # <- same length list of ints
 
