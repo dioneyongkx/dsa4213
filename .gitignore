@@ -1,0 +1,2 @@
+# ignore outputs from colab model runs
+Features/data_preprocessor/colab_processed_models/
