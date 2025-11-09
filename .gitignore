@@ -20,4 +20,4 @@ Features/raw_data_handler/colab_processed_models
 *.zip
 *.vocab
 *.model
-*.DS_Store
+**.DS_Store
