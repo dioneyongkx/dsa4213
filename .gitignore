@@ -9,20 +9,7 @@ Features/raw_data_handler/colab_processed_models
 
 .DS_Store
 
-datasets/*
-!datasets/.gitkeep
 
-datasets/cross_domain_dataset/*
-!datasets/cross_domain_dataset/.gitkeep
-
-datasets/encoder_dataset/*
-!datasets/encoder_dataset/.gitkeep
-
-datasets/raw_dataset/*
-!datasets/raw_dataset/.gitkeep
-
-datasets/word2vec_dataset/*
-!datasets/word2vec_dataset/.gitkeep
 
 # Ignore all data files in any subfolder
 *.csv
