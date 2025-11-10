@@ -10,8 +10,6 @@ Features/encoding/DistilBERT_pipeline/checkpoints_distilbert/
 
 .DS_Store
 
-
-
 # Ignore all data files in any subfolder
 *.csv
 *.npy
