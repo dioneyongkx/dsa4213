@@ -6,6 +6,9 @@ Features/encoding/bilstm_pipeline/checkpoints
 # Features/encoding/bilstm_pipeline/best_ckpts
 Features/encoding/bilstm_pipeline/archive/
 Features/raw_data_handler/colab_processed_models
+Features/encoding/DistilBERT_pipeline/best_ckpts_distilbert/
+Features/encoding/DistilBERT_pipeline/raw_encoder_data_sets/
+Features/encoding/DistilBERT_pipeline/clean_data_distilbert/
 
 .DS_Store
 Features/DS.Store
