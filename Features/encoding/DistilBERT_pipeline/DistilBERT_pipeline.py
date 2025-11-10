@@ -259,9 +259,9 @@ class DistilBERTLoRAEncoder(nn.Module):
 
 
 # Load raw data
-train_df_raw = pd.read_csv('/home/ubuntu/projects/dione/DistilBERT_pipeline/raw_encoder_data_sets/train_set.csv')
-val_df_raw = pd.read_csv('/home/ubuntu/projects/dione/DistilBERT_pipeline/raw_encoder_data_sets/valid_set.csv')
-test_df_raw = pd.read_csv('/home/ubuntu/projects/dione/DistilBERT_pipeline/raw_encoder_data_sets/test_set.csv')
+train_df_raw = pd.read_csv('../../../datasets/encoder_dataset/raw/train_set.csv')
+val_df_raw = pd.read_csv('../../../datasets/encoder_dataset/raw/valid_set.csv')
+test_df_raw = pd.read_csv('../../../datasets/encoder_dataset/raw/test_set.csv')
 
 print("Raw data shapes:")
 print(f"Train: {train_df_raw.shape}")
@@ -292,10 +292,10 @@ print(f"Train-Test: {len(set(train_df[text_col]) & set(test_df[text_col]))}")
 print(f"Val-Test: {len(set(val_df[text_col]) & set(test_df[text_col]))}")
 
 # Save cleaned data
-os.makedirs('clean_data_distilbert', exist_ok=True)
-train_df.to_csv('clean_data_distilbert/train_clean.csv', index=False)
-val_df.to_csv('clean_data_distilbert/val_clean.csv', index=False)
-test_df.to_csv('clean_data_distilbert/test_clean.csv', index=False)
+os.makedirs('../../../../datasets/encoder_dataset/clean/distilbert', exist_ok=True)
+train_df.to_csv('../../../../datasets/encoder_dataset/clean/distilbert/train_clean.csv', index=False)
+val_df.to_csv('../../../../datasets/encoder_dataset/clean/distilbert/val_clean.csv', index=False)
+test_df.to_csv('../../../../datasets/encoder_dataset/clean/distilbert/test_clean.csv', index=False)
 
 
 # ## DistilBERT + LoRA Finetuning
@@ -424,9 +424,9 @@ def save_checkpoint(path, epoch, model, optimizer, scheduler, config, best_f1, s
 
 
 # Load cleaned data
-train_df = pd.read_csv('clean_data_distilbert/train_clean.csv')
-val_df = pd.read_csv('clean_data_distilbert/val_clean.csv')
-test_df = pd.read_csv('clean_data_distilbert/test_clean.csv')
+train_df = pd.read_csv('../../../../datasets/encoder_dataset/clean/distilbert/train_clean.csv')
+val_df = pd.read_csv('../../../../datasets/encoder_dataset/clean/distilbert/val_clean.csv')
+test_df = pd.read_csv('../../../../datasets/encoder_dataset/clean/distilbert/test_clean.csv')
 
 # Initialize tokenizer
 tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
