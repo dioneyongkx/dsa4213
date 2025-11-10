@@ -9,6 +9,7 @@ Features/raw_data_handler/colab_processed_models
 
 .DS_Store
 Features/DS.Store
+Features/encoding/DistilBERT_pipeline/checkpoints_distilbert/
 
 
 # Ignore all data files in any subfolder
