@@ -8,7 +8,7 @@ Features/encoding/bilstm_pipeline/archive/
 Features/raw_data_handler/colab_processed_models
 
 .DS_Store
-
+Features/DS.Store
 
 
 # Ignore all data files in any subfolder
