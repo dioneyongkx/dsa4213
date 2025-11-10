@@ -6,10 +6,10 @@ Features/encoding/bilstm_pipeline/checkpoints
 # Features/encoding/bilstm_pipeline/best_ckpts
 Features/encoding/bilstm_pipeline/archive/
 Features/raw_data_handler/colab_processed_models
+Features/encoding/DistilBERT_pipeline/checkpoints_distilbert/
 
 .DS_Store
-Features/DS.Store
-Features/encoding/DistilBERT_pipeline/checkpoints_distilbert/
+
 
 
 # Ignore all data files in any subfolder
