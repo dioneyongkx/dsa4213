@@ -1,0 +1,25 @@
+# Core scientific stack
+numpy>=2.1.0
+pandas>=2.2.2
+matplotlib>=3.9.2
+seaborn>=0.13.2
+tqdm>=4.67.1
+joblib>=1.4.2
+
+# Scikit-learn (ML algorithms + metrics)
+scikit-learn>=1.5.2
+
+# PyTorch + Transformers + PEFT
+torch>=2.4.0
+transformers>=4.45.0
+peft>=0.13.0
+
+# BeautifulSoup (HTML parsing)
+beautifulsoup4>=4.12.3
+
+# Utilities
+json5>=0.9.25
+unicodedata2>=15.1.0
+
+# (Optional but recommended)
+# tqdm progress bar and warnings already built-in; re and os are standard libraries
