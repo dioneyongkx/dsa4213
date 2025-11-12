@@ -41,7 +41,7 @@ The goal was to produce a **clean, standardized text corpus** compatible with bo
 | **Subword tokenization** | Splits text into subword units via SentencePiece. | Ensures alignment with DistilBERT’s subword representation. | Uses trained SentencePiece model (`email_sp.model`). |
 | **Character-level whitelisting** | Retains only characters from an approved set (letters, digits, punctuation, emoji). | Provides consistent input space and avoids noisy tokens. | Easier to maintain than blacklisting rare symbols. |
 | **Normalize repeated characters** | Reduces excessive character repetition (e.g., `loooove` → `love`). | Prevents vocabulary explosion. | Helps reduce out-of-vocabulary noise. |
-| **Prune rare words** | Removes tokens below minimum frequency (e.g., `< 10`). | Eliminates noisy, low-value words from the corpus. | Threshold tunable based on embedding performance. |
+| **Prune rare words** | Removes tokens below minimum frequency (e.g., `< 5`). | Eliminates noisy, low-value words from the corpus. | Threshold tunable based on embedding performance. |
 | **File extension masking** | Maps `.pdf`, `.txt`, etc., to `<FILE>`. | Captures common phishing/scam download cues. | Handled both during HTML parsing and in later regex mapping. |
 
 ---
