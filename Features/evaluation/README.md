@@ -3,19 +3,36 @@
 ## Directory Overview
 This directory contains the evaluation and cross-domain testing pipelines used to measure the performance and generalization ability of our BiLSTM and DistilBERT email scam detection models.
 
-The goal is to test how well models trained on email data transfer to unseen distributions, including other email sources and SMS scam datasets.
+The goal is to test how well models trained on email data transfer to unseen distributions, including other email sources and the SMS spam dataset.
 
 Below are the two main evaluation notebooks (other .png files in the repository can be ignored):
 
 | File | Description |
 |----------------|-------------|
+| `word2vec_evaluation.ipynb` | Contains all word2vec evaluation for main BiLSTM model |
 | `biLSTM_evaluation_cdtesting.ipynb` | Contains all evaluation and cross-domain testing code for BiLSTM base and ablation models |
 | `distilBERT_evaluation_cdtesting.ipynb` | Contains all evaluation and cross-domain testing code for DistilBERT base and ablation models |
 
 
 ## Model Performance Evaluation
 
-Each notebook includes:
+The **Word2Vec evaluation** notebook includes:
+
+- Loading the trained Word2Vec embedding model
+- Loading the encoded datasets for both Batch A and Batch B
+- Computing global embedding quality metrics:
+  - Cosine similarity between word pairs
+  - Word analogy evaluations (where applicable)
+- Visualizing embedding structure to inspect semantic relationships using:
+  - PCA (Principal Component Analysis)
+  - t-SNE dimensionality reduction
+  - PCA → t-SNE pipeline for improved clustering
+
+These evaluations help validate the semantic consistency of the Word2Vec embeddings and ensure they capture meaningful relationships prior to being used in downstream classification models.<br><br>
+
+
+
+The **BiLSTM and DistilBERT evaluation** notebooks include:
 
 - Loading of model checkpoints (`best_ckpts/` and `best_ckpts_distilbert/`)
 - Loading SentencePiece / HuggingFace tokenizers
@@ -34,7 +51,7 @@ These results allow a direct comparison between baseline and ablation model vari
 
 ## Cross-Domain Testing
 
-Both notebooks evaluate **generalization to unseen SMS Scam dataset**. The cross-domain pipeline includes:
+Both notebooks evaluate **generalization to unseen SMS Spam dataset**. The cross-domain pipeline includes:
 
 - Cleaning and tokenizing external datasets
 - Running inference through the same trained models
