@@ -32,7 +32,7 @@ Please follow the steps below to reproduce the results of this project
 | **2** | **Install Dependencies** | Run: `pip install -r requirements.txt` |
 | **3** | **Prepare Raw Data** | Execute `Features/raw_data_handler/raw_data_handling.ipynb`<br>This will generate cleaned *raw splits* for:<br>• `datasets/word2vec_dataset/raw/`<br>• `datasets/encoder_dataset/raw/`<br>• `datasets/cross_domain/raw/` |
 | **4** | **Run BiLSTM Pipeline** | Navigate to: `Features/encoding/bilstm_pipeline/`<br>Run in order:<br>1. `biLSTM_prepro.ipynb` — preprocessing + SentencePiece + Word2Vec<br>2. `biLSTM_pipeline.ipynb` — full BiLSTM training + threshold tuning<br>3. `biLSTM_ablation.ipynb` — HGB head ablation on frozen encoder |
-| **5** | **Run DistilBERT Pipeline** | Navigate to: `Features/encoding/DistilBERT_pipeline/`<br>Run in order:  |
+| **5** | **Run DistilBERT Pipeline** | Navigate to: `Features/encoding/DistilBERT_pipeline/`<br>Run in order:<br>1. `DistilBERT_pipeline.ipynb` - preprocessing + full distilBERT finetuning<br>2. `DistilBERT_ablation.ipynb` - HBG head ablation on frozen encoder|
 | **6** | **Run Evaluation Pipeline** | Navigate to: `Features/evaluation/`<br>Run in order:<br>1. `word2vec_evaluation.ipynb` — BiLSTM Word2Vec embedding evaluation<br>2. `bilstm_evaluation_cdtesting.ipnyb` — BiLSTM base + ablation model performance evaluation and cross-domain testing on SMS Spam dataset<br>3. `distilBERT_evaluation_cdtesting.ipynb` — DistilBERT base + ablation model performance evaluation and cross-domain testing on SMS Spam dataset|
 
 ## Project Directory Overview
