@@ -12,11 +12,16 @@ This project explores the possibility of using NLP algorithms to identify scam m
 Scam detection in emails has become an increasingly urgent challenge in the digital age. With the rise of online communication, email remains one of the most common vectors for fraudulent activity. We aim to train NLP algorithms to be able to recognise and flag out such scams.
 
 
-A brief overview of our project:
-1. Enron Fraud Email Dataset wil be used to train the word embedding layer of our pipeline
-    https://www.kaggle.com/datasets/advaithsrao/enron-fraud-email-dataset/data
-2. We will be comparing two different model pipelines, their efficiency and accuracy will be evaluated
-3. Finally, we will conduct some ablation studies on our best perfoming model
+## Brief Overview of Our Project
+1.	**Train domain-specific Word2Vec embeddings for BiLSTM**
+    - Using the Enron Fraud Email Dataset, we construct email-domain subword and word embeddings tailored for downstream classification tasks.
+2.	**Develop two main model pipelines**
+    - BiLSTM pipeline using pretrained Word2Vec embeddings
+	- DistilBERT pipeline via end-to-end Parameter efficient fine-tuning
+3.	**Ablation Study 1: Classifier Head Replacement**
+    - Replace the BiLSTM’s logistic regression head with a HistGradientBoosting classifier to assess th e impact of non-linear decision boundaries.
+4.	**Ablation Study 2: Cross-Domain Generalisation**
+    - Evaluate both pipelines on external datasets to measure robustness and domain transfer performance.
 
 
 ## Navigating our project
