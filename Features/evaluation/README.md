@@ -5,7 +5,7 @@ This directory contains the evaluation and cross-domain testing pipelines used t
 
 The goal is to test how well models trained on email data transfer to unseen distributions, including other email sources and SMS scam datasets.
 
-Below are the two main evaluation notebooks:
+Below are the two main evaluation notebooks (other .png files in the repository can be ignored):
 
 | File | Description |
 |----------------|-------------|
@@ -27,7 +27,7 @@ Each notebook includes:
   - F1-score  
   - ROC-AUC  
   - Confusion Matrix
-- Inspecting misclassifcation cases (False Positives and False Negatives)
+- Inspecting misclassified examples (False Positives & False Negatives) to better understand weaknesses of the models
 
 These results allow a direct comparison between baseline and ablation model variants.
 
