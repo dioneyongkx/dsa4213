@@ -3,7 +3,7 @@
 ## Directory Overview
 This directory contains the evaluation and cross-domain testing pipelines used to measure the performance and generalization ability of our BiLSTM and DistilBERT email scam detection models.
 
-The goal is to test how well models trained on email data transfer to unseen distributions, including other email sources and SMS scam datasets.
+The goal is to test how well models trained on email data transfer to unseen distributions, including other email sources and the SMS spam dataset.
 
 Below are the two main evaluation notebooks (other .png files in the repository can be ignored):
 
@@ -51,7 +51,7 @@ These results allow a direct comparison between baseline and ablation model vari
 
 ## Cross-Domain Testing
 
-Both notebooks evaluate **generalization to unseen SMS Scam dataset**. The cross-domain pipeline includes:
+Both notebooks evaluate **generalization to unseen SMS Spam dataset**. The cross-domain pipeline includes:
 
 - Cleaning and tokenizing external datasets
 - Running inference through the same trained models
